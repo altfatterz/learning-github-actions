@@ -25,4 +25,6 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
       - name: Build Native Image
-        run: mvn -Pnative spring-boot:build-image
+        run: |
+          - cd openai-chat-demo
+          - mvn -Pnative spring-boot:build-image
