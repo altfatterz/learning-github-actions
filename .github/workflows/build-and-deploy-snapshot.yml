@@ -1,0 +1,28 @@
+name: Build and Deploy Snapshot
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  AZURE_CONTAINER_REGISTRY: youracrname.azurecr.io
+  IMAGE_NAME: openai-chat-demo
+  CLUSTER_NAME: your-aks-cluster
+  RESOURCE_GROUP: your-resource-group
+  NAMESPACE: default
+
+jobs:
+  build-and-deploy-snapshot:
+    name: Build and Deploy Snapshot
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Out Code
+        uses: actions/checkout@v4
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+      - name: Build Native Image
+        run: mvn -Pnative spring-boot:build-image
