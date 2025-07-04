@@ -40,6 +40,29 @@ Hello! How can I assist you today?
 ```
 
 
+### Authenticate to Azure using Service Principal
+
+```bash
+az ad sp create-for-rbac --name "openai-chat-demo-sp" --role contributor --scopes /subscriptions/<subscriptionId>
+
+{
+  "appId": "<>",
+  "displayName": "openai-chat-demo-sp",
+  "password": "<>",
+  "tenant": "<>"
+}
+
+We need to create AZURE_CREDENTIALS repo secret with the following format 
+
+{
+  "clientId": "<appId>",
+  "clientSecret": "<password>",
+  "subscriptionId": "YOUR_SUBSCRIPTION_ID",
+  "tenantId": "<tenant>"
+}
+
+```
+
 
 
 ### Resources:
