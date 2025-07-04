@@ -9,9 +9,8 @@ env:
   RESOURCE_GROUP: learning-github-actions
   AZURE_CONTAINER_REGISTRY: learninggithubactions.azurecr.io
   IMAGE_NAME: openai-chat-demo
-
-  CLUSTER_NAME: your-aks-cluster
-  NAMESPACE: default
+  AKS_CLUSTER_NAME: learning-github-actions
+  KUSTOMIZE_PATH: ./k8s/overlays/dev
 
 jobs:
   build-and-deploy-snapshot:
@@ -41,5 +40,23 @@ jobs:
           password: ${{ secrets.ACR_PASSWORD }}
       - name: Docker tag and push image
         run: |
-          docker tag docker.io/library/$IMAGE_NAME:0.0.1-SNAPSHOT ${{ env.AZURE_CONTAINER_REGISTRY }}/$IMAGE_NAME:0.0.1-SNAPSHOT 
-          docker push ${{ env.AZURE_CONTAINER_REGISTRY }}/$IMAGE_NAME:0.0.1-SNAPSHOT
+          docker tag docker.io/library/$IMAGE_NAME:0.0.1-SNAPSHOT ${{ env.AZURE_CONTAINER_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} 
+          docker push ${{ env.AZURE_CONTAINER_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+      - name: Set AKS context
+        uses: azure/aks-set-context@v4
+        with:
+          resource-group: ${{ env.RESOURCE_GROUP }}
+          cluster-name: ${{ env.AKS_CLUSTER_NAME }}
+      - name: Bake manifests with Kustomize
+        uses: azure/k8s-bake@v3
+        with:
+          renderEngine: kustomize
+          kustomizationPath: ${{ env.KUSTOMIZE_PATH }}
+          kubectl-version: latest
+        id: bake
+      - name: Deploy to AKS
+        uses: azure/k8s-deploy@v5
+        with:
+          manifests: ${{ steps.bake.outputs.manifestsBundle }}
+          images: |
+            ${{ env.AZURE_CONTAINER_REGISTRY }}./${{ env.IMAGE_NAME }}:${{ github.sha }}

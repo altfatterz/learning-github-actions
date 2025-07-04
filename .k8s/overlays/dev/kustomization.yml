@@ -1,0 +1,13 @@
+resources:
+  - ../../base
+
+patches:
+  - path: patch.yml
+
+namePrefix: dev-
+
+labels:
+  - includeSelectors: true
+    includeTemplates: true
+    pairs:
+      env: dev
