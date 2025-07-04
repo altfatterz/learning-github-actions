@@ -7,7 +7,7 @@ on:
 
 env:
   RESOURCE_GROUP: learning-github-actions
-  REGISTRY_NAME: learninggithubactions
+  AZURE_CONTAINER_REGISTRY: learninggithubactions.azurecr.io
   IMAGE_NAME: openai-chat-demo
 
   CLUSTER_NAME: your-aks-cluster
@@ -29,9 +29,6 @@ jobs:
         run: |
           cd openai-chat-demo
           mvn -Pnative spring-boot:build-image
-      # Using Service principal
-      # https://learn.microsoft.com/en-us/azure/app-service/deploy-github-actions?tabs=userlevel%2Caspnetcore#configure-the-github-secret
-      # https://github.com/marketplace/actions/azure-login
       - name: Azure login
         uses: azure/login@v2
         with:
@@ -39,11 +36,10 @@ jobs:
       - name: Login to ACR
         uses: azure/docker-login@v2
         with:
-          login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
-          # Enable Admin user for ACR, Username -> ACR_USERNAME, Password or Password2 -> ACR_PASSWORD
+          login-server: ${{ env.AZURE_CONTAINER_REGISTRY }}
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
       - name: Docker tag and push image
         run: |
-          docker tag docker.io/library/$IMAGE_NAME:0.0.1-SNAPSHOT ${{ env.REGISTRY_NAME }}.azurecr.io/$IMAGE_NAME:0.0.1-SNAPSHOT 
-          docker push ${{ env.REGISTRY_NAME }}.azurecr.io/$IMAGE_NAME:0.0.1-SNAPSHOT
+          docker tag docker.io/library/$IMAGE_NAME:0.0.1-SNAPSHOT ${{ env.AZURE_CONTAINER_REGISTRY }}/$IMAGE_NAME:0.0.1-SNAPSHOT 
+          docker push ${{ env.AZURE_CONTAINER_REGISTRY }}/$IMAGE_NAME:0.0.1-SNAPSHOT
