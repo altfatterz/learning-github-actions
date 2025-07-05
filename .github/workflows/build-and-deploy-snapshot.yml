@@ -9,7 +9,7 @@ env:
   RESOURCE_GROUP: learning-github-actions
   AZURE_CONTAINER_REGISTRY: learninggithubactions.azurecr.io
   IMAGE_NAME: openai-chat-demo
-  AKS_CLUSTER_NAME: learning-github-actions
+  AKS_CLUSTER_NAME: learninggithubactions
   KUSTOMIZE_PATH: ./k8s/overlays/dev
 
 jobs:
@@ -24,10 +24,10 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-      - name: Build Native Image
+      - name: Build Image
         run: |
           cd openai-chat-demo
-          mvn -Pnative spring-boot:build-image
+          mvn spring-boot:build-image
       - name: Azure login
         uses: azure/login@v2
         with:
