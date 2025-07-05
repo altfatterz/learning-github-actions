@@ -49,14 +49,13 @@ jobs:
           cluster-name: ${{ env.AKS_CLUSTER_NAME }}
       - name: Bake manifests with Kustomize
         uses: azure/k8s-bake@v3
+        id: bake
         with:
           renderEngine: kustomize
           kustomizationPath: ${{ env.KUSTOMIZE_PATH }}
-          kubectl-version: latest
-        id: bake
       - name: Deploy to AKS
         uses: azure/k8s-deploy@v5
         with:
           manifests: ${{ steps.bake.outputs.manifestsBundle }}
           images: |
-            ${{ env.AZURE_CONTAINER_REGISTRY }}./${{ env.IMAGE_NAME }}:${{ github.sha }}
+            ${{ env.AZURE_CONTAINER_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
