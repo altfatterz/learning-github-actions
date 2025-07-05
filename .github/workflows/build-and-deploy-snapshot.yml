@@ -11,6 +11,7 @@ env:
   IMAGE_NAME: openai-chat-demo
   AKS_CLUSTER_NAME: learning-github-actions
   KUSTOMIZE_PATH: ./k8s/overlays/dev
+  OPENAI_API_KEY: ${{ secret.OPENAI_API_KEY }}
 
 jobs:
   build-and-deploy-snapshot:
@@ -53,6 +54,7 @@ jobs:
         with:
           renderEngine: kustomize
           kustomizationPath: ${{ env.KUSTOMIZE_PATH }}
+          kubectl-version: latest
       - name: Deploy to AKS
         uses: azure/k8s-deploy@v5
         with:

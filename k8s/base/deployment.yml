@@ -14,7 +14,6 @@ spec:
     spec:
       containers:
         - name: openai-chat-demo
-          image: todo
           ports:
             - containerPort: 8080
           livenessProbe:
