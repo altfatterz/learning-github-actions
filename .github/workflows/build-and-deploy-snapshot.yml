@@ -24,10 +24,10 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-      - name: Build Image
+      - name: Build Native Image
         run: |
           cd openai-chat-demo
-          mvn spring-boot:build-image
+          mvn -Pnative spring-boot:build-image
       - name: Azure login
         uses: azure/login@v2
         with:
