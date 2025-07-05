@@ -48,7 +48,7 @@ jobs:
           resource-group: ${{ env.RESOURCE_GROUP }}
           cluster-name: ${{ env.AKS_CLUSTER_NAME }}
       - name: Write secret to file
-        run: echo "openai-api-key=${{ secrets.OPENAI_API_KEY }}" > k8s/base/${{ env.IMAGE_NAME}}-secret.txt
+        run: echo "${{ secrets.OPENAI_API_KEY }}" > k8s/base/openai-api-key
       - name: Bake manifests with Kustomize
         uses: azure/k8s-bake@v3
         id: bake
