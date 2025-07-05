@@ -11,7 +11,6 @@ env:
   IMAGE_NAME: openai-chat-demo
   AKS_CLUSTER_NAME: learning-github-actions
   KUSTOMIZE_PATH: ./k8s/overlays/dev
-  OPENAI_API_KEY: ${{ secret.OPENAI_API_KEY }}
 
 jobs:
   build-and-deploy-snapshot:
@@ -48,6 +47,8 @@ jobs:
         with:
           resource-group: ${{ env.RESOURCE_GROUP }}
           cluster-name: ${{ env.AKS_CLUSTER_NAME }}
+      - name: Write secret to file
+        run: echo "openai-api-key=${{ secrets.OPENAI_API_KEY }}" > k8s/base/${{ env.IMAGE_NAME}}-secret.txt
       - name: Bake manifests with Kustomize
         uses: azure/k8s-bake@v3
         id: bake

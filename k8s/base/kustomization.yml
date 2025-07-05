@@ -1,3 +1,10 @@
 resources:
   - deployment.yml
   - service.yml
+
+configMapGenerator:
+  - name: openai-chat-demo-configmap
+    files:
+      - openai-chat-demo-secret.txt
+generatorOptions:
+  disableNameSuffixHash: true

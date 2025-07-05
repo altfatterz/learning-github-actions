@@ -16,6 +16,12 @@ spec:
         - name: openai-chat-demo
           ports:
             - containerPort: 8080
+          env:
+            - name: OPENAI_API_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: openai-chat-demo-configmap
+                  key: openai-api-key
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
