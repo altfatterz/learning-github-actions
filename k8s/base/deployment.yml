@@ -14,6 +14,8 @@ spec:
     spec:
       containers:
         - name: openai-chat-demo
+          # replaced in the github workflow with learninggithubactions.azurecr.io/openai-chat-demo:${{ github.sha }}
+          image: learninggithubactions.azurecr.io/openai-chat-demo:latest
           ports:
             - containerPort: 8080
           env:
