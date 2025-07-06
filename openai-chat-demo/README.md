@@ -64,6 +64,14 @@ We need to create AZURE_CREDENTIALS repo secret with the following format
 ```
 
 
+### AKS
+
+```bash
+az aks get-credentials --resource-group learning-github-actions --name learninggithubactions
+
+kubectl cluster-info
+```
+
 
 ### Resources:
 
