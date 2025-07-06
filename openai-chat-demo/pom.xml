@@ -58,6 +58,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<!-- creates by default a linux/arm64 image with native build setup -->
 			</plugin>
 		</plugins>
 	</build>
