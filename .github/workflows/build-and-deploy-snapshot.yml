@@ -9,7 +9,7 @@ env:
   RESOURCE_GROUP: learning-github-actions
   AZURE_CONTAINER_REGISTRY: learninggithubactions.azurecr.io
   IMAGE_NAME: openai-chat-demo
-  AKS_CLUSTER_NAME: learninggithubactions
+  AKS_CLUSTER_NAME: learning-github-actions-aks
   KUSTOMIZE_PATH: ./k8s/overlays/dev
 
 jobs:

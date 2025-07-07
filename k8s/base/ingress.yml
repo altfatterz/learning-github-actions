@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: openai-chat-demo
+spec:
+  ingressClassName: azure-application-gateway
+  rules:
+    - http:
+        paths:
+          - path: /openai-chat-demo
+            backend:
+              service:
+                name: openai-chat-demo
+                port:
+                  number: 8080
+            pathType: Prefix
