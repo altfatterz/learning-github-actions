@@ -1,6 +1,7 @@
 resources:
   - deployment.yml
   - service.yml
+  - ingress.yml
 
 configMapGenerator:
   - name: openai-chat-demo-configmap

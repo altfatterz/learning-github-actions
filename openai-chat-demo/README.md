@@ -72,6 +72,10 @@ az aks get-credentials --resource-group learning-github-actions --name learningg
 kubectl cluster-info
 ```
 
+### Set the ACR_USERNAME and ACR_PASSWORD 
+
+In Azure portal enable the admin user and use the username and password provided
+
 
 ### Resources:
 
