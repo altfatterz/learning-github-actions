@@ -1,5 +1,6 @@
 ### AKS cluster with AGIC (Application Gateway Ingress Controller) add-on 
 
+```bash
 RESOURCE_GROUP='learning-github-actions'
 AKS_NAME='learning-github-actions-aks'
 ACR_NAME='learninggithubactions'
@@ -7,7 +8,6 @@ APP_GATEWAY_NAME='learning-github-actions-appgw'
 APP_GATEWAY_SUBNET_CIDR='10.225.0.0/16'
 REGION='westeurope'
 
-```bash
 # creates resource group
 az group create --name $RESOURCE_GROUP --location $REGION
 # create an acr instance
